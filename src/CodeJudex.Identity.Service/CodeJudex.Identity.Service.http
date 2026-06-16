@@ -1,0 +1,6 @@
+@CodeJudex.Identity.Service_HostAddress = http://localhost:5036
+
+GET {{CodeJudex.Identity.Service_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -1,0 +1,6 @@
+@CodeJudex.Gateway_HostAddress = http://localhost:5064
+
+GET {{CodeJudex.Gateway_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
