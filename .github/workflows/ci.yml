@@ -21,10 +21,10 @@ jobs:
         dotnet-version: '10.0.x' 
 
     - name: Restore dependencies
-      run: dotnet restore CodeJudex.sln
+      run: dotnet restore CodeJudex.slnx
 
     - name: Build
-      run: dotnet build CodeJudex.sln --no-restore --configuration Release
+      run: dotnet build CodeJudex.slnx --no-restore --configuration Release
 
     - name: Test
-      run: dotnet test CodeJudex.sln --no-build --verbosity normal
+      run: dotnet test CodeJudex.slnx --no-build --verbosity normal
