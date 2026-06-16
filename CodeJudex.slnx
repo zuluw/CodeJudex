@@ -1,12 +1,17 @@
 <Solution>
   <Folder Name="/src/">
     <Project Path="src/CodeJudex.Analytics.Service/CodeJudex.Analytics.Service.csproj" />
-    <Project Path="src/CodeJudex.Audit.Service/CodeJudex.Audit.Service.csproj" />
     <Project Path="src/CodeJudex.Content.Service/CodeJudex.Content.Service.csproj" />
     <Project Path="src/CodeJudex.Gateway/CodeJudex.Gateway.csproj" />
     <Project Path="src/CodeJudex.Identity.Service/CodeJudex.Identity.Service.csproj" />
     <Project Path="src/CodeJudex.Orchestrator.Service/CodeJudex.Orchestrator.Service.csproj" />
     <Project Path="src/CodeJudex.Sandbox.Service/CodeJudex.Sandbox.Service.csproj" />
     <Project Path="src/CodeJudex.Shared/CodeJudex.Shared.csproj" />
+  </Folder>
+  <Folder Name="/src/CodeJudex.Audit.Service/">
+    <Project Path="src/CodeJudex.Audit.Service/CodeJudex.Audit.Api/CodeJudex.Audit.Api.csproj" />
+    <Project Path="src/CodeJudex.Audit.Service/CodeJudex.Audit.Application/CodeJudex.Audit.Application.csproj" />
+    <Project Path="src/CodeJudex.Audit.Service/CodeJudex.Audit.Domain/CodeJudex.Audit.Domain.csproj" />
+    <Project Path="src/CodeJudex.Audit.Service/CodeJudex.Audit.Infrastructure/CodeJudex.Audit.Infrastructure.csproj" />
   </Folder>
 </Solution>

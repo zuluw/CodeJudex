@@ -10,4 +10,10 @@
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.7" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CodeJudex.Audit.Application\CodeJudex.Audit.Application.csproj" />
+    <ProjectReference Include="..\CodeJudex.Audit.Infrastructure\CodeJudex.Audit.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\CodeJudex.Shared\CodeJudex.Shared.csproj" />
+  </ItemGroup>
+
 </Project>
