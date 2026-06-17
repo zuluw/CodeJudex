@@ -4,7 +4,7 @@ using System.Net;
 namespace CodeJudex.Audit.Api.Middleware;
 
 /// <summary>
-/// Global exception handler
+/// Provides centralized exception handling for the API.
 /// </summary>
 public class ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddleware> logger)
 {

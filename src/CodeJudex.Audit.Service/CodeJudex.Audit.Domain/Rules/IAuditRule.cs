@@ -3,25 +3,22 @@ using CodeJudex.Audit.Domain.Models;
 
 namespace CodeJudex.Audit.Domain.Rules;
 
-/// <summary>
-/// Interface for implementing automated code audit rules
-/// </summary>
 public interface IAuditRule
 {
     /// <summary>
-    /// Unique rule identifier (e.g., CJ001)
+    /// Gets the unique identifier for the rule (e.g., CJ-001).
     /// </summary>
     string RuleId { get; }
 
     /// <summary>
-    /// Rule title
+    /// Gets the display title of the rule.
     /// </summary>
     string Title { get; }
 
     /// <summary>
-    /// Method for analyzing the syntax tree
+    /// Analyzes the syntax tree for specific code violations.
     /// </summary>
-    /// <param name="root">Root of the syntax tree</param>
-    /// <returns>List of found violations</returns>
+    /// <param name="root">The root node of the C# syntax tree.</param>
+    /// <returns>A collection of discovered <see cref="AuditIssue"/>.</returns>
     IEnumerable<AuditIssue> Analyze(SyntaxNode root);
 }

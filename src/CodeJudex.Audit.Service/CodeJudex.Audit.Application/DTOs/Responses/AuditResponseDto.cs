@@ -1,7 +1,7 @@
 namespace CodeJudex.Audit.Application.DTOs.Responses;
 
 /// <summary>
-/// DTO for the final audit result in the response
+/// Represents the final audit report response.
 /// </summary>
 public record AuditResponseDto(
     int QualityScore,

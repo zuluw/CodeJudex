@@ -6,9 +6,6 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace CodeJudex.Audit.Infrastructure.DependencyInjection;
 
-/// <summary>
-/// Class for registering Infrastructure layer dependencies
-/// </summary>
 public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructureServices(this IServiceCollection services)

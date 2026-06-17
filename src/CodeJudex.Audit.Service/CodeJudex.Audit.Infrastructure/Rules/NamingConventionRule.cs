@@ -7,19 +7,20 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 namespace CodeJudex.Audit.Infrastructure.Rules;
 
 /// <summary>
-/// Verifies that method names use PascalCase formatting.
+/// Verifies that method names follow the PascalCase naming convention.
 /// </summary>
 public class NamingConventionRule : IAuditRule
 {
+    /// <inheritdoc />
     public string RuleId => "CJ-001";
+
+    /// <inheritdoc />
     public string Title => "Method naming violation";
 
+    /// <inheritdoc />
     public IEnumerable<AuditIssue> Analyze(SyntaxNode root)
     {
-        var issues = new List<AuditIssue>();
-
-        var methodDeclarations = root.DescendantNodes()
-            .OfType<MethodDeclarationSyntax>();
+        var methodDeclarations = root.DescendantNodes().OfType<MethodDeclarationSyntax>();
 
         foreach (var method in methodDeclarations)
         {
@@ -28,17 +29,14 @@ public class NamingConventionRule : IAuditRule
             if (!string.IsNullOrEmpty(methodName) && char.IsLower(methodName[0]))
             {
                 var lineSpan = method.Identifier.GetLocation().GetLineSpan();
-                var lineNumber = lineSpan.StartLinePosition.Line + 1;
 
-                issues.Add(new AuditIssue(
+                yield return new AuditIssue(
                     RuleId,
-                    $"Method '{methodName}' must start with an uppercase letter (PascalCase).",
+                    $"Method '{methodName}' should start with an uppercase letter.",
                     Severity.Warning,
-                    lineNumber
-                ));
+                    lineSpan.StartLinePosition.Line + 1
+                );
             }
         }
-
-        return issues;
     }
 }

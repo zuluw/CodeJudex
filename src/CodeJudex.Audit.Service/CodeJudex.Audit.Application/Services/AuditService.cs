@@ -17,6 +17,7 @@ public class AuditService(
     IValidator<AuditRequestDto> validator,
     ILogger<AuditService> logger) : IAuditService
 {
+    /// <inheritdoc />
     public async Task<AuditResponseDto> AuditCodeAsync(AuditRequestDto request, CancellationToken ct)
     {
         logger.LogInformation("Starting code audit. Language: {Language}", request.Language);

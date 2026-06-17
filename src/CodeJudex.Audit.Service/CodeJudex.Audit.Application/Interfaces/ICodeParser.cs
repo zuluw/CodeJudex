@@ -3,14 +3,12 @@ using Microsoft.CodeAnalysis;
 namespace CodeJudex.Audit.Application.Interfaces;
 
 /// <summary>
-/// Interface for a service that converts source code into an abstract syntax tree (AST)
+/// Defines a service for parsing source code into a syntax tree.
 /// </summary>
 public interface ICodeParser
 {
     /// <summary>
-    /// Parses a source code string and returns the root of the syntax tree.
+    /// Parses source code and returns the root node of the syntax tree.
     /// </summary>
-    /// <param name="code">Program code</param>
-    /// <returns>Root of the syntax tree</returns>
     SyntaxNode Parse(string code);
 }

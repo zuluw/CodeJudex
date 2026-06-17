@@ -6,9 +6,6 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace CodeJudex.Audit.Application.DependencyInjection;
 
-/// <summary>
-/// Class for registering Application layer dependencies
-/// </summary>
 public static class DependencyInjection
 {
     public static IServiceCollection AddApplicationServices(this IServiceCollection services)

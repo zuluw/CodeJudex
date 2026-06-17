@@ -1,7 +1,7 @@
 namespace CodeJudex.Audit.Application.DTOs.Responses;
 
 /// <summary>
-/// DTO for describing a specific violation in the response
+/// Represents a single code violation in the audit response.
 /// </summary>
 public record AuditIssueResponseDto(
     string RuleId,

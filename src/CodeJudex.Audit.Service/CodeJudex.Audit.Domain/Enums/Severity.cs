@@ -1,22 +1,19 @@
 namespace CodeJudex.Audit.Domain.Enums;
 
-/// <summary>
-/// The severity level of the code violation
-/// </summary>
 public enum Severity
 {
     /// <summary>
-    /// Recommendation for improvement (does not affect the score)
+    /// Informational recommendation that does not affect the final score.
     /// </summary>
     Info,
 
     /// <summary>
-    /// Warning (slight decrease in score)
+    /// Warning indicating a minor violation. Reduces the score slightly.
     /// </summary>
     Warning,
 
     /// <summary>
-    /// Critical error (serious violation of standards)
+    /// Critical error indicating a serious violation. Significantly reduces the score.
     /// </summary>
     Error
 }
