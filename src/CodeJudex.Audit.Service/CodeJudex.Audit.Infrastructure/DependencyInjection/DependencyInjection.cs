@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace CodeJudex.Audit.Infrastructure.DependencyInjection;
 
 /// <summary>
-/// A class for registering infrastructure dependencies in the DI container.
+/// Class for registering Infrastructure layer dependencies
 /// </summary>
 public static class DependencyInjection
 {
