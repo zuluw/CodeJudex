@@ -14,7 +14,7 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
-
+    
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
@@ -27,4 +27,4 @@ jobs:
       run: dotnet build CodeJudex.slnx --no-restore --configuration Release
 
     - name: Test
-      run: dotnet test CodeJudex.slnx --no-build --verbosity normal
+      run: dotnet test tests/CodeJudex.Audit.UnitTests/CodeJudex.Audit.UnitTests.csproj --no-build --configuration Release --verbosity normal

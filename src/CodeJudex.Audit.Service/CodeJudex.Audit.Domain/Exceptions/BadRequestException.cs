@@ -1,0 +1,3 @@
+namespace CodeJudex.Audit.Domain.Exceptions;
+
+public class BadRequestException(string message) : BaseException(message, 400);
