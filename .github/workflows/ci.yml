@@ -27,4 +27,4 @@ jobs:
       run: dotnet build CodeJudex.slnx --no-restore --configuration Release
 
     - name: Test
-      run: dotnet test CodeJudex.slnx --no-build --verbosity normal
+      run: dotnet test tests/**/*.csproj --no-build --verbosity normal
