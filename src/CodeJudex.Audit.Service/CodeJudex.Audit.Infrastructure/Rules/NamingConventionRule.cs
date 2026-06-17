@@ -26,7 +26,7 @@ public class NamingConventionRule : IAuditRule
         {
             var methodName = method.Identifier.Text;
 
-            if (!string.IsNullOrEmpty(methodName) && char.IsLower(methodName[0]))
+            if (!string.IsNullOrEmpty(methodName) && !char.IsUpper(methodName[0]))
             {
                 var lineSpan = method.Identifier.GetLocation().GetLineSpan();
 

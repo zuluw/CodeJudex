@@ -14,7 +14,7 @@ public class AuditRequestValidator : AbstractValidator<AuditRequestDto>
 
         RuleFor(x => x.Language)
             .NotEmpty().WithMessage("The programming language must be specified.")
-            .Must(lang => lang.Equals("csharp", StringComparison.OrdinalIgnoreCase))
+            .Must(lang => lang?.Equals("csharp", StringComparison.OrdinalIgnoreCase) ?? false)
             .WithMessage("Currently, only code audit for the C# language is supported.");
     }
 }

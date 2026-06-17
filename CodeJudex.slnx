@@ -14,4 +14,7 @@
     <Project Path="src/CodeJudex.Audit.Service/CodeJudex.Audit.Domain/CodeJudex.Audit.Domain.csproj" />
     <Project Path="src/CodeJudex.Audit.Service/CodeJudex.Audit.Infrastructure/CodeJudex.Audit.Infrastructure.csproj" />
   </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/CodeJudex.Audit.UnitTests/CodeJudex.Audit.UnitTests.csproj" />
+  </Folder>
 </Solution>
