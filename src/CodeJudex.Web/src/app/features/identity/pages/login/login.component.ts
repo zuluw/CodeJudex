@@ -9,9 +9,9 @@ import { AuthService } from '../../../../core/services/auth.service';
   templateUrl: './login.component.html'
 })
 export class LoginComponent {
-  private auth = inject(AuthService);
+  private readonly auth = inject(AuthService);
 
-  login() {
+  public login(): void {
     this.auth.login();
   }
 }

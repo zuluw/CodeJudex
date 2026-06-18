@@ -32,18 +32,28 @@ export const routes: Routes = [
     ]
   },
   {
-    path: 'app',
-    loadComponent: () => import('./layout/main-layout/main-layout.component').then(m => m.MainLayoutComponent),
-    children: [
-      {
-        path: 'audit/workspace',
-        loadComponent: () => import('./features/audit/pages/audit-workspace/audit-workspace.component').then(m => m.AuditWorkspaceComponent)
-      },
-      {
-        path: 'dashboard',
-        loadComponent: () => import('./features/dashboard/pages/dashboard-home/dashboard-home.component').then(m => m.DashboardHomeComponent)
-      },
-    ]
-  },
+  path: 'app',
+  loadComponent: () => import('./layout/main-layout/main-layout.component').then(m => m.MainLayoutComponent),
+  children: [
+    {
+      path: 'dashboard',
+      loadComponent: () => import('./features/dashboard/pages/dashboard-home/dashboard-home.component').then(m => m.DashboardHomeComponent)
+    },
+    {
+      path: 'audit',
+      children: [
+        {
+          path: 'workspace/:taskId',
+          loadComponent: () => import('./features/audit/pages/audit-workspace/audit-workspace.component').then(m => m.AuditWorkspaceComponent)
+        },
+        {
+          path: 'workspace',
+          loadComponent: () => import('./features/audit/pages/audit-workspace/audit-workspace.component').then(m => m.AuditWorkspaceComponent)
+        }
+      ]
+    },
+    { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
+  ]
+},
   { path: '**', redirectTo: '' }
 ];

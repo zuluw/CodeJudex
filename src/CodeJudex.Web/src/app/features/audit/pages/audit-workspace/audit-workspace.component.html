@@ -1,1 +1,96 @@
-<p>audit-workspace works!</p>
+<div class="h-[calc(100vh-80px)] grid grid-cols-12 gap-1 overflow-hidden antialiased">
+  
+  <div class="col-span-12 lg:col-span-5 flex flex-col bg-slate-900/30 border-r border-slate-800">
+    <div class="flex bg-slate-950/50 border-b border-slate-800 px-2">
+      <button (click)="activeTab = 'desc'" [class.text-blue-500]="activeTab === 'desc'"
+              class="px-4 py-3 text-[10px] font-black uppercase tracking-widest border-b-2"
+              [class.border-blue-500]="activeTab === 'desc'" [class.border-transparent]="activeTab !== 'desc'">
+        Description
+      </button>
+      <button (click)="activeTab = 'ai'" [class.text-purple-500]="activeTab === 'ai'"
+              class="px-4 py-3 text-[10px] font-black uppercase tracking-widest border-b-2"
+              [class.border-purple-500]="activeTab === 'ai'" [class.border-transparent]="activeTab !== 'ai'">
+        AI Mentor
+      </button>
+      <button (click)="activeTab = 'telemetry'" [class.text-orange-500]="activeTab === 'telemetry'"
+              class="px-4 py-3 text-[10px] font-black uppercase tracking-widest border-b-2"
+              [class.border-orange-500]="activeTab === 'telemetry'" [class.border-transparent]="activeTab !== 'telemetry'">
+        Telemetry
+      </button>
+    </div>
+
+    <div class="flex-grow overflow-y-auto p-8">
+      @if (activeTab === 'desc') {
+        <article class="prose prose-invert max-w-none">
+          <h1 class="text-2xl font-bold text-white mb-4">1061. Lexicographically Smallest String</h1>
+          <div class="flex gap-2 mb-6">
+            <span class="px-2 py-1 bg-yellow-500/10 text-yellow-500 text-[10px] font-bold rounded uppercase">Medium</span>
+          </div>
+          <p class="text-slate-400 leading-relaxed">
+            Implement an algorithm that normalizes naming conventions and reduces nesting complexity...
+          </p>
+        </article>
+      }
+
+      @if (activeTab === 'ai') {
+        <div class="flex flex-col items-center justify-center h-full text-center space-y-4 opacity-50">
+          <span class="text-4xl">🤖</span>
+          <p class="text-sm font-mono uppercase tracking-widest">AI Mentor is analyzing your code patterns...</p>
+        </div>
+      }
+
+      @if (activeTab === 'telemetry') {
+        <div class="flex flex-col items-center justify-center h-full text-center space-y-4 opacity-50">
+          <span class="text-4xl">📊</span>
+          <p class="text-sm font-mono uppercase tracking-widest">Connect to Docker Sandbox to view metrics</p>
+        </div>
+      }
+    </div>
+  </div>
+
+  <div class="col-span-12 lg:col-span-7 flex flex-col bg-slate-950">
+    <div class="h-12 bg-slate-900/80 border-b border-slate-800 flex items-center px-4 justify-between">
+      <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Language: C# (.NET 10)</span>
+      <div class="flex gap-2">
+         <span class="text-[10px] font-bold text-slate-500">Auto-save: ON</span>
+      </div>
+    </div>
+
+    <div class="flex-grow relative">
+      <textarea [(ngModel)]="sourceCode" 
+                class="w-full h-full bg-transparent p-6 font-mono text-sm text-blue-400 focus:outline-none resize-none"
+                placeholder="public class Solution { ... }"></textarea>
+
+      @if (auditResult) {
+        <div class="absolute bottom-0 left-0 w-full max-h-64 bg-slate-900/95 backdrop-blur-xl border-t border-slate-700 p-6 overflow-y-auto animate-in slide-in-from-bottom duration-300">
+           <div class="flex justify-between items-center mb-4">
+              <h4 class="text-xs font-black text-white uppercase tracking-widest">Audit Quality Score: {{auditResult.qualityScore}}%</h4>
+              <button (click)="auditResult = null" class="text-slate-500 hover:text-white">✕</button>
+           </div>
+           <div class="space-y-2">
+             @for (issue of auditResult.issues; track $index) {
+               <div class="text-xs font-mono p-2 rounded bg-slate-950 border-l-2" 
+                    [class.border-red-500]="issue.severity === 'Error'"
+                    [class.border-yellow-500]="issue.severity === 'Warning'">
+                 <span class="text-slate-500">[Line {{issue.lineNumber}}]</span> 
+                 <span class="text-white ml-2">{{issue.message}}</span>
+               </div>
+             }
+           </div>
+        </div>
+      }
+    </div>
+
+    <div class="h-16 bg-slate-900 border-t border-slate-800 flex items-center px-6 justify-between">
+      <button class="btn-secondary py-2 text-xs">Console</button>
+      <div class="flex gap-4">
+        <button class="px-6 py-2 bg-slate-800 text-white rounded text-xs font-bold hover:bg-slate-700 transition-colors uppercase tracking-widest">Run Tests</button>
+        <button (click)="onAuditSubmit()" [disabled]="isLoading"
+                class="px-6 py-2 bg-blue-600 text-white rounded text-xs font-bold hover:bg-blue-500 disabled:opacity-50 transition-all uppercase tracking-widest shadow-lg shadow-blue-500/20">
+          {{ isLoading ? 'Analyzing...' : 'Submit & Audit' }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+</div>

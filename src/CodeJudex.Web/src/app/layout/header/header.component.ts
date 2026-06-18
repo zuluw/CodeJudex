@@ -10,15 +10,15 @@ import { AuthService } from '../../core/services/auth.service';
   templateUrl: './header.component.html'
 })
 export class HeaderComponent {
-  public auth = inject(AuthService); 
+  public readonly auth = inject(AuthService); 
   
-  isProfileMenuOpen = false;
+  public isProfileMenuOpen: boolean = false;
 
-  toggleProfileMenu() {
+  public toggleProfileMenu(): void {
     this.isProfileMenuOpen = !this.isProfileMenuOpen;
   }
 
-  onLogout() {
+  public onLogout(): void {
     this.isProfileMenuOpen = false;
     this.auth.logout();
   }
