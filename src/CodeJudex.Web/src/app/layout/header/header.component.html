@@ -1,0 +1,62 @@
+<nav class="sticky top-0 z-50 backdrop-blur-md border-b border-slate-800/50 bg-slate-950/80">
+  <div class="container mx-auto px-8 h-20 flex justify-between items-center">
+    
+    <div class="flex items-center gap-12">
+      <a routerLink="/" class="text-xl font-black tracking-tighter text-white">CODEJUDEX</a>
+      
+      <div class="hidden md:flex gap-8 text-xs font-bold uppercase tracking-widest">
+        <a routerLink="/" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="text-blue-500 border-b-2 border-blue-500 pb-1" class="text-slate-500 hover:text-white transition-all">Home</a>
+        <a routerLink="/about" routerLinkActive="text-blue-500 border-b-2 border-blue-500 pb-1" class="text-slate-500 hover:text-white transition-all">About</a>
+        <a routerLink="/team" routerLinkActive="text-blue-500 border-b-2 border-blue-500 pb-1" class="text-slate-500 hover:text-white transition-all">Team</a>
+        <a routerLink="/tasks" routerLinkActive="text-blue-500 border-b-2 border-blue-500 pb-1" class="text-slate-500 hover:text-white transition-all">Tasks</a>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-6">
+      
+      @if (!auth.isLoggedIn()) {
+        <button routerLink="/auth/login" class="btn-primary py-2 text-sm">Sign In</button>
+      }
+
+      @if (auth.isLoggedIn()) {
+        <button class="text-slate-500 hover:text-white transition-colors relative">
+          <span class="text-xl">🔔</span>
+          <span class="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+        </button>
+
+        <div class="relative">
+        <button (click)="toggleProfileMenu()" class="w-10 h-10 rounded-full border border-slate-800 overflow-hidden hover:border-blue-500 transition-all">
+            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Sashka" alt="User Avatar">
+        </button>
+
+        @if (isProfileMenuOpen) {
+            <div class="absolute right-0 mt-4 w-72 bg-slate-900/90 backdrop-blur-2xl border border-slate-800 rounded-xl shadow-2xl p-4 z-[100]">
+            
+            <div (click)="isProfileMenuOpen = false" 
+                routerLink="/app/dashboard" 
+                class="flex items-center gap-4 mb-6 p-3 rounded-lg hover:bg-slate-800/50 cursor-pointer transition-colors border border-transparent hover:border-slate-700">
+                <div class="w-12 h-12 bg-slate-800 rounded-full border border-slate-700 overflow-hidden">
+                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Sashka" alt="avatar">
+                </div>
+                <div>
+                <p class="text-white font-bold">Alexander M.</p>
+                <p class="text-[10px] text-blue-500 uppercase font-black tracking-widest">View Profile</p>
+                </div>
+            </div>
+
+            <div class="space-y-1 text-sm text-slate-400">
+                <button class="w-full text-left px-3 py-2 hover:bg-slate-800 hover:text-white rounded transition-colors flex justify-between items-center">
+                <span>Settings</span>
+                <span class="text-[10px] bg-slate-800 px-1.5 py-0.5 rounded">CMD+,</span>
+                </button>
+                <div class="border-t border-slate-800 my-2"></div>
+                <button (click)="onLogout()" class="w-full text-left px-3 py-2 text-red-500 hover:bg-red-500/10 rounded transition-colors">Sign Out Account</button>
+            </div>
+            </div>
+        }
+        </div>
+
+      }
+    </div>
+  </div>
+</nav>
