@@ -9,6 +9,12 @@
         <a routerLink="/about" routerLinkActive="text-blue-500 border-b-2 border-blue-500 pb-1" class="text-slate-500 hover:text-white transition-all">About</a>
         <a routerLink="/team" routerLinkActive="text-blue-500 border-b-2 border-blue-500 pb-1" class="text-slate-500 hover:text-white transition-all">Team</a>
         <a routerLink="/tasks" routerLinkActive="text-blue-500 border-b-2 border-blue-500 pb-1" class="text-slate-500 hover:text-white transition-all">Tasks</a>
+     
+        @if (auth.isLoggedIn() && auth.userRole() === 'Admin') {
+          <a routerLink="/app/admin/dashboard" 
+            routerLinkActive="text-blue-500 border-b-2 border-blue-500 pb-1" 
+            class="text-slate-500 hover:text-white transition-all">Admin</a>
+        }
       </div>
     </div>
 

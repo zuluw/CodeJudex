@@ -1,0 +1,71 @@
+<div class="max-w-7xl mx-auto space-y-10 antialiased">
+  
+  <header class="flex justify-between items-center">
+    <div>
+      <h1 class="text-4xl font-black text-white tracking-tighter uppercase">Administrative Console</h1>
+      <p class="text-slate-500 font-medium italic">Monitoring system health and academic integrity.</p>
+    </div>
+    <div class="flex gap-4">
+      <button routerLink="/app/admin/tasks" class="btn-primary py-2 text-[10px] uppercase">Create Task</button>
+    </div>
+  </header>
+
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+    <div class="glass-card p-6 border-slate-800">
+      <p class="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2">Active Students</p>
+      <p class="text-3xl font-mono text-white">1,248</p>
+    </div>
+    <div class="glass-card p-6 border-slate-800">
+      <p class="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2">Tasks Hosted</p>
+      <p class="text-3xl font-mono text-white">450</p>
+    </div>
+    <div class="glass-card p-6 border-slate-800 border-yellow-500/20">
+      <p class="text-[10px] font-black text-yellow-500/50 uppercase tracking-widest mb-2">Plagiarism Alerts</p>
+      <p class="text-3xl font-mono text-yellow-500">14</p>
+    </div>
+    <div class="glass-card p-6 border-slate-800">
+      <p class="text-[10px] font-black text-blue-500/50 uppercase tracking-widest mb-2">Avg. Code Quality</p>
+      <p class="text-3xl font-mono text-white">76%</p>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+    <section class="lg:col-span-2 space-y-6">
+      <div class="flex justify-between items-center">
+        <h3 class="text-sm font-black text-slate-500 uppercase tracking-widest">Recent Plagiarism Incidents</h3>
+        <button routerLink="/app/admin/plagiarism" class="text-[10px] text-blue-500 hover:underline font-bold uppercase">View Detailed Report</button>
+      </div>
+      
+      <div class="space-y-4">
+        @for(incident of [1,2,3]; track incident) {
+          <div class="flex gap-6 items-center p-5 bg-red-500/5 border border-red-500/20 rounded-lg hover:border-red-500/50 transition-all group">
+            <div class="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
+            <div class="flex-grow">
+              <h4 class="text-white font-bold text-sm">Critical Similarity Detected: Task #{{100 + incident}}</h4>
+              <p class="text-xs text-slate-500 mt-1">Student A (ID: 452) vs Student B (ID: 891) — <span class="text-red-400">92% Logic Match (AST)</span></p>
+            </div>
+            <button class="px-4 py-1.5 border border-red-500/30 text-red-500 text-[10px] font-bold rounded hover:bg-red-500 hover:text-white transition-all uppercase">Investigate</button>
+          </div>
+        }
+      </div>
+    </section>
+
+    <aside class="space-y-6">
+      <h3 class="text-sm font-black text-slate-500 uppercase tracking-widest px-1">Infrastructure Status</h3>
+      <div class="glass-card p-6 space-y-4">
+        <div class="flex justify-between items-center text-xs">
+          <span class="text-slate-400">Audit Service (.NET)</span>
+          <span class="text-green-500 font-mono">ONLINE</span>
+        </div>
+        <div class="flex justify-between items-center text-xs">
+          <span class="text-slate-400">Docker Runner</span>
+          <span class="text-green-500 font-mono">STABLE</span>
+        </div>
+        <div class="flex justify-between items-center text-xs">
+          <span class="text-slate-400">AST Engine</span>
+          <span class="text-blue-500 font-mono">ACTIVE</span>
+        </div>
+      </div>
+    </aside>
+  </div>
+</div>
