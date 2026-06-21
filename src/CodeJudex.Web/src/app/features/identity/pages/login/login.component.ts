@@ -12,6 +12,7 @@ export class LoginComponent {
   private readonly auth = inject(AuthService);
 
   public login(): void {
-    this.auth.login();
+    this.auth.login('Admin')
+    //this.auth.login();
   }
 }

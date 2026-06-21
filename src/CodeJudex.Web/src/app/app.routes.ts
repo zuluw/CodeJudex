@@ -52,8 +52,25 @@ export const routes: Routes = [
         }
       ]
     },
-    { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
-  ]
-},
+    {
+      path: 'admin',
+      children: [
+        {
+          path: 'dashboard',
+          loadComponent: () => import('./features/admin/pages/admin-dashboard/admin-dashboard.component').then(m => m.AdminDashboardComponent)
+        },
+        {
+          path: 'tasks',
+          loadComponent: () => import('./features/admin/pages/task-management/task-management.component').then(m => m.TaskManagementComponent)
+        },
+        {
+          path: 'plagiarism',
+          loadComponent: () => import('./features/admin/pages/plagiarism-report/plagiarism-report.component').then(m => m.PlagiarismReportComponent)
+        }
+      ]
+    },
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
+    ]
+  },
   { path: '**', redirectTo: '' }
 ];

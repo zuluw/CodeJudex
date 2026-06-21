@@ -1,0 +1,72 @@
+<div class="max-w-7xl mx-auto px-8 py-12 space-y-10 antialiased">
+  
+  <header>
+    <h1 class="text-3xl font-black text-white tracking-tighter uppercase">Integrity Intelligence</h1>
+    <p class="text-slate-500 text-xs font-bold mt-1 uppercase tracking-[0.3em]">AST-Based Plagiarism Detection Engine</p>
+  </header>
+
+  <div class="grid grid-cols-12 gap-8 h-[700px]">
+    
+    <aside class="col-span-12 lg:col-span-4 flex flex-col gap-4 overflow-y-auto pr-2 custom-scrollbar">
+      <h3 class="text-[10px] font-black text-slate-600 uppercase tracking-widest px-2">Active Alerts</h3>
+      
+      @for (incident of incidents; track incident.id) {
+        <div (click)="selectIncident(incident)"
+             [class.border-blue-500]="selectedIncident()?.id === incident.id"
+             class="glass-card p-5 cursor-pointer border-slate-800 hover:border-slate-600 transition-all group">
+          <div class="flex justify-between items-start mb-3">
+            <span class="text-[10px] font-mono text-blue-500 font-bold">{{incident.id}}</span>
+            <span class="px-2 py-0.5 bg-red-500/10 text-red-500 text-[9px] font-black rounded uppercase">
+              {{incident.similarity}}% Match
+            </span>
+          </div>
+          <h4 class="text-white font-bold text-sm mb-1">{{incident.taskTitle}}</h4>
+          <p class="text-[10px] text-slate-500 font-mono italic">{{incident.detectedAt}}</p>
+        </div>
+      }
+    </aside>
+
+    <main class="col-span-12 lg:col-span-8 flex flex-col bg-slate-900/30 border border-slate-800 rounded-xl overflow-hidden shadow-2xl">
+      @if (selectedIncident(); as incident) {
+        <div class="p-6 border-b border-slate-800 bg-slate-950/50 flex justify-between items-center">
+          <div>
+            <h2 class="text-white font-bold tracking-tight">Incident Analysis: {{incident.id}}</h2>
+            <p class="text-xs text-slate-500 mt-1">Comparing logic structures for <span class="text-slate-300 font-bold">{{incident.taskTitle}}</span></p>
+          </div>
+          <button class="px-5 py-2 bg-red-600 text-white text-[10px] font-black rounded uppercase hover:bg-red-700 transition-all">Flag Submissions</button>
+        </div>
+
+        <div class="flex-grow grid grid-cols-2 divide-x divide-slate-800">
+          <div class="flex flex-col h-full">
+            <div class="p-3 bg-slate-950/30 border-b border-slate-800 flex justify-between items-center px-6">
+              <span class="text-[9px] font-black text-slate-500 uppercase tracking-widest">Source A: {{incident.studentA.id}}</span>
+            </div>
+            <div class="p-6 font-mono text-xs text-blue-400/80 bg-slate-950 h-full overflow-hidden">
+               <pre>{{incident.studentA.code}}</pre>
+            </div>
+          </div>
+
+          <div class="flex flex-col h-full">
+             <div class="p-3 bg-slate-950/30 border-b border-slate-800 flex justify-between items-center px-6">
+              <span class="text-[9px] font-black text-slate-500 uppercase tracking-widest">Source B: {{incident.studentB.id}}</span>
+            </div>
+            <div class="p-6 font-mono text-xs text-red-400/80 bg-slate-950 h-full overflow-hidden border-l-2 border-red-500/20">
+               <pre>{{incident.studentB.code}}</pre>
+            </div>
+          </div>
+        </div>
+        
+        <div class="p-4 bg-slate-950 border-t border-slate-800">
+          <p class="text-[10px] text-slate-600 font-mono leading-relaxed">
+            <span class="text-blue-500 font-bold">[SYSTEM INSIGHT]</span> Comparison performed using Roslyn AST Walker. High structural similarity detected in <u>MethodDeclaration</u> and <u>ForStatement</u> nodes despite token obfuscation.
+          </p>
+        </div>
+      } @else {
+        <div class="flex flex-col items-center justify-center h-full text-slate-600 space-y-4">
+          <span class="text-4xl opacity-20 italic font-black uppercase tracking-tighter">No Incident Selected</span>
+        </div>
+      }
+    </main>
+
+  </div>
+</div>
