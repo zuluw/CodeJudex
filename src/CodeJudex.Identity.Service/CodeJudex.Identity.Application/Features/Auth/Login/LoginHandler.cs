@@ -33,7 +33,6 @@ public class LoginHandler(
 
         var (accessToken, refreshToken, expiresAt) = tokenService.GenerateTokens(user, roles);
 
-        // TODO: Save Refresh Token to the database after implementing Infrastructure layer.
         user.RefreshToken = refreshToken;
         user.RefreshTokenExpiryTime = expiresAt.AddDays(7);
 
