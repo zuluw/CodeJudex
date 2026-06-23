@@ -1,7 +1,9 @@
 using CodeJudex.Identity.Api.Middleware;
 using CodeJudex.Identity.Application.DependencyInjection;
+using CodeJudex.Identity.Infrastructure.Data;
 using CodeJudex.Identity.Infrastructure.DependencyInjection;
 using Serilog;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -46,5 +48,22 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        var context = services.GetRequiredService<ApplicationDbContext>();
+        if (context.Database.GetPendingMigrations().Any())
+        {
+            context.Database.Migrate();
+        }
+    }
+    catch (Exception ex)
+    {
+        Log.Error(ex, "An error occurred while migrating the database.");
+    }
+}
 
 app.Run();

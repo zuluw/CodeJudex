@@ -1,0 +1,65 @@
+services:
+  identity-db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: codejudex-identity-db
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=${MSSQL_SA_PASSWORD}
+    ports:
+      - "1433:1433"
+    volumes:
+      - mssql-identity-data:/var/opt/mssql
+    networks:
+      - codejudex-network
+
+  identity-api:
+    build:
+      context: ../src/CodeJudex.Identity.Service
+      dockerfile: CodeJudex.Identity.Api/Dockerfile
+    container_name: codejudex-identity-api
+    ports:
+      - "${IDENTITY_API_PORT}:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=${IDENTITY_DB_CONNECTION}
+      - JwtOptions__Secret=${IDENTITY_JWT_SECRET}
+      - JwtOptions__Issuer=${IDENTITY_JWT_ISSUER}
+      - JwtOptions__Audience=${IDENTITY_JWT_AUDIENCE}
+    depends_on:
+      - identity-db
+    networks:
+      - codejudex-network
+
+  audit-api:
+    build:
+      context: ../src/CodeJudex.Audit.Service
+      dockerfile: CodeJudex.Audit.Api/Dockerfile
+    container_name: codejudex-audit-api
+    ports:
+      - "${AUDIT_API_PORT}:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - JwtOptions__Secret=${AUDIT_JWT_SECRET}
+      - JwtOptions__Issuer=${AUDIT_JWT_ISSUER}
+      - JwtOptions__Audience=${AUDIT_JWT_AUDIENCE}
+    networks:
+      - codejudex-network
+  web-client:
+    build:
+      context: ../src/CodeJudex.Web
+      dockerfile: Dockerfile
+    container_name: codejudex-web-client
+    ports:
+      - "4200:80"
+    depends_on:
+      - identity-api
+      - audit-api
+    networks:
+      - codejudex-network
+
+volumes:
+  mssql-identity-data:
+
+networks:
+  codejudex-network:
+    driver: bridge
