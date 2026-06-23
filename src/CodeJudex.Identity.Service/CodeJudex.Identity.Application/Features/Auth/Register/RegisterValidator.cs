@@ -15,7 +15,9 @@ public class RegisterValidator : AbstractValidator<RegisterCommand>
 
         RuleFor(x => x.Password)
             .NotEmpty().WithMessage("Password is required.")
-            .MinimumLength(6).WithMessage("Password must be at least 6 characters long.");
+            .MinimumLength(6).WithMessage("Password must be at least 6 characters long.")
+            .Matches(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).*$")
+            .WithMessage("Password must contain at least one uppercase letter, one lowercase letter, and one digit.");
 
         RuleFor(x => x.FullName)
             .NotEmpty().WithMessage("Full name is required.")
