@@ -1,10 +1,12 @@
 using CodeJudex.Audit.Application.DTOs.Requests;
 using CodeJudex.Audit.Application.DTOs.Responses;
 using CodeJudex.Audit.Application.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CodeJudex.Audit.Api.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class AuditController(IAuditService auditService) : ControllerBase
