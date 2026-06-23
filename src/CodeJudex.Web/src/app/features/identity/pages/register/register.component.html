@@ -5,29 +5,46 @@
       <p class="text-slate-500 text-sm">Join the intelligent education ecosystem.</p>
     </div>
 
-    <div class="space-y-5">
+    <form [formGroup]="registerForm" (ngSubmit)="onRegister()" class="space-y-5">
       <div>
         <label class="block text-xs font-bold text-slate-500 uppercase mb-2 tracking-widest">Full Name</label>
-        <input type="text" placeholder="John Doe" 
-               class="w-full bg-slate-950/50 border border-slate-800 rounded px-4 py-3 text-white focus:outline-none focus:border-blue-600 transition-colors">
+        <input formControlName="fullName" type="text" placeholder="John Doe" 
+               class="w-full bg-slate-950/50 border border-slate-800 rounded px-4 py-3 text-white focus:outline-none focus:border-blue-600 transition-colors"
+               [class.border-red-500]="registerForm.get('fullName')?.touched && registerForm.get('fullName')?.invalid">
       </div>
 
       <div>
         <label class="block text-xs font-bold text-slate-500 uppercase mb-2 tracking-widest">Email Address</label>
-        <input type="email" placeholder="user@codejudex.com" 
-               class="w-full bg-slate-950/50 border border-slate-800 rounded px-4 py-3 text-white focus:outline-none focus:border-blue-600 transition-colors">
+        <input formControlName="email" type="email" placeholder="user@codejudex.com" 
+               class="w-full bg-slate-950/50 border border-slate-800 rounded px-4 py-3 text-white focus:outline-none focus:border-blue-600 transition-colors"
+               [class.border-red-500]="registerForm.get('email')?.touched && registerForm.get('email')?.invalid">
       </div>
 
       <div>
         <label class="block text-xs font-bold text-slate-500 uppercase mb-2 tracking-widest">Password</label>
-        <input type="password" placeholder="••••••••" 
-               class="w-full bg-slate-950/50 border border-slate-800 rounded px-4 py-3 text-white focus:outline-none focus:border-blue-600 transition-colors">
+        <input formControlName="password" type="password" placeholder="••••••••" 
+               class="w-full bg-slate-950/50 border border-slate-800 rounded px-4 py-3 text-white focus:outline-none focus:border-blue-600 transition-colors"
+               [class.border-red-500]="registerForm.get('password')?.touched && registerForm.get('password')?.invalid">
+        
+        <!-- Ошибки в реальном времени -->
+        @if (registerForm.get('password')?.touched && registerForm.get('password')?.invalid) {
+          <div class="mt-2 space-y-1">
+            @if (registerForm.get('password')?.errors?.['minlength']) {
+              <p class="text-red-500 text-[10px] uppercase font-bold tracking-tight">● Min 6 characters</p>
+            }
+            @if (registerForm.get('password')?.errors?.['pattern']) {
+              <p class="text-red-500 text-[10px] uppercase font-bold tracking-tight">● Need Uppercase & Lowercase</p>
+            }
+          </div>
+        }
       </div>
 
-      <button class="btn-primary w-full py-4 uppercase text-sm tracking-widest mt-4">
-        Register Account
+      <button type="submit" 
+              [disabled]="registerForm.invalid || isLoading()"
+              class="btn-primary w-full py-4 uppercase text-sm tracking-widest mt-4 disabled:opacity-30 disabled:cursor-not-allowed">
+        {{ isLoading() ? 'Processing...' : 'Register Account' }}
       </button>
-    </div>
+    </form>
     
     <div class="mt-8 pt-6 border-t border-slate-800 text-center text-xs">
       <span class="text-slate-500">Already have an account? </span>

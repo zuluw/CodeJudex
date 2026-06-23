@@ -10,7 +10,7 @@ import { environment } from '../../../../environments/environment';
 })
 export class AuditApiService {
   private readonly http = inject(HttpClient);
-  private readonly endpoint = `${environment.apiUrl}/audit`; 
+  private readonly endpoint = `${environment.auditUrl}/audit`; 
 
   public runAudit(sourceCode: string): Observable<AuditResponse> {
     const payload = { sourceCode, language: 'csharp' };
