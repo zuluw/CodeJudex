@@ -7,7 +7,7 @@ namespace CodeJudex.Identity.Application.Common.Mappings;
 /// <summary>
 /// Provides mapping functionality for authentication data.
 /// </summary>
-[Mapper]
+[Mapper(RequiredMappingStrategy = RequiredMappingStrategy.None)]
 public partial class AuthMapper
 {
     /// <summary>
