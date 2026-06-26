@@ -18,6 +18,8 @@ public static class DependencyInjection
         services.AddScoped<ICodeParser, CSharpParser>();
         services.AddScoped<IAuditRule, NamingConventionRule>();
         services.AddScoped<IAuditRule, ComplexityRule>();
+        services.AddScoped<IAuditRule, MagicNumberRule>();
+        services.AddScoped<IAuditRule, StringBuilderRule>();
 
         var jwtSection = configuration.GetSection("JwtOptions");
         services.Configure<JwtOptions>(jwtSection);
