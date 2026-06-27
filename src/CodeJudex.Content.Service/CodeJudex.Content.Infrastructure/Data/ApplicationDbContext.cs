@@ -1,4 +1,5 @@
-﻿using CodeJudex.Content.Domain.Models;
+﻿using CodeJudex.Content.Application.Common.Interfaces;
+using CodeJudex.Content.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace CodeJudex.Content.Infrastructure.Data;
@@ -6,7 +7,7 @@ namespace CodeJudex.Content.Infrastructure.Data;
 /// <summary>
 /// Provides access to the programming challenges and test cases in the database.
 /// </summary>
-public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : DbContext(options)
+public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : DbContext(options), IApplicationDbContext
 {
     public DbSet<Problem> Problems => Set<Problem>();
     public DbSet<TestCase> TestCases => Set<TestCase>();
