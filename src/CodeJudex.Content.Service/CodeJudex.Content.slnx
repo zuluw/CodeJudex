@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="CodeJudex.Content.Api/CodeJudex.Content.Api.csproj" />
+  <Project Path="CodeJudex.Content.Application/CodeJudex.Content.Application.csproj" />
+  <Project Path="CodeJudex.Content.Domain/CodeJudex.Content.Domain.csproj" />
+  <Project Path="CodeJudex.Content.Infrastructure/CodeJudex.Content.Infrastructure.csproj" />
+</Solution>
