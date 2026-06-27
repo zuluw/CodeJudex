@@ -44,6 +44,36 @@ services:
       - JwtOptions__Audience=${AUDIT_JWT_AUDIENCE}
     networks:
       - codejudex-network
+  content-db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: codejudex-content-db
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=${MSSQL_SA_PASSWORD}
+    ports:
+      - "1435:1433"
+    volumes:
+      - mssql-content-data:/var/opt/mssql
+    networks:
+      - codejudex-network
+
+  content-api:
+    build:
+      context: ../src/CodeJudex.Content.Service
+      dockerfile: CodeJudex.Content.Api/Dockerfile
+    container_name: codejudex-content-api
+    ports:
+      - "${CONTENT_API_PORT}:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=${CONTENT_DB_CONNECTION}
+      - JwtOptions__Secret=${CONTENT_JWT_SECRET}
+      - JwtOptions__Issuer=${CONTENT_JWT_ISSUER}
+      - JwtOptions__Audience=${CONTENT_JWT_AUDIENCE}
+    depends_on:
+      - content-db
+    networks:
+      - codejudex-network
   web-client:
     build:
       context: ../src/CodeJudex.Web
@@ -59,6 +89,7 @@ services:
 
 volumes:
   mssql-identity-data:
+  mssql-content-data:
 
 networks:
   codejudex-network:

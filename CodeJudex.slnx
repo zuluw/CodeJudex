@@ -1,7 +1,6 @@
 <Solution>
   <Folder Name="/src/">
     <Project Path="src/CodeJudex.Analytics.Service/CodeJudex.Analytics.Service.csproj" />
-    <Project Path="src/CodeJudex.Content.Service/CodeJudex.Content.Service.csproj" />
     <Project Path="src/CodeJudex.Gateway/CodeJudex.Gateway.csproj" />
     <Project Path="src/CodeJudex.Orchestrator.Service/CodeJudex.Orchestrator.Service.csproj" />
     <Project Path="src/CodeJudex.Sandbox.Service/CodeJudex.Sandbox.Service.csproj" />
@@ -18,6 +17,12 @@
     <Project Path="src/CodeJudex.Identity.Service/CodeJudex.Identity.Application/CodeJudex.Identity.Application.csproj" />
     <Project Path="src/CodeJudex.Identity.Service/CodeJudex.Identity.Domain/CodeJudex.Identity.Domain.csproj" />
     <Project Path="src/CodeJudex.Identity.Service/CodeJudex.Identity.Infrastructure/CodeJudex.Identity.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/src/CodeJudex.Content.Service/">
+    <Project Path="src/CodeJudex.Content.Service/CodeJudex.Content.Api/CodeJudex.Content.Api.csproj" />
+    <Project Path="src/CodeJudex.Content.Service/CodeJudex.Content.Application/CodeJudex.Content.Application.csproj" />
+    <Project Path="src/CodeJudex.Content.Service/CodeJudex.Content.Domain/CodeJudex.Content.Domain.csproj" />
+    <Project Path="src/CodeJudex.Content.Service/CodeJudex.Content.Infrastructure/CodeJudex.Content.Infrastructure.csproj" />
   </Folder>
   <Folder Name="/tests/">
     <Project Path="tests/CodeJudex.Audit.UnitTests/CodeJudex.Audit.UnitTests.csproj" />
