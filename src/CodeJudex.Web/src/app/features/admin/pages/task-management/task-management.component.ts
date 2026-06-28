@@ -44,7 +44,7 @@ export class TaskManagementComponent implements OnInit {
     this.contentService.getProblemBySlug(task.slug).subscribe({
       next: (fullTask) => {
         this.isEditMode.set(true);
-        this.isCreateMode = true; // Open the form panel
+        this.isCreateMode = true; 
         this.currentEditId.set(fullTask.id);
 
         this.taskForm.patchValue({

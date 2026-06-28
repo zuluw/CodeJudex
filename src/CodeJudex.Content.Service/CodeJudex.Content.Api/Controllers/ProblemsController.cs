@@ -52,6 +52,8 @@ public class ProblemsController(IMediator mediator) : ControllerBase
     /// Deletes a programming challenge.
     /// </summary>
     [HttpDelete("{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Delete(Guid id)
     {
         await mediator.Send(new DeleteProblemCommand(id));
@@ -62,9 +64,16 @@ public class ProblemsController(IMediator mediator) : ControllerBase
     /// Updates a programming challenge.
     /// </summary>
     [HttpPut("{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Update(Guid id, [FromBody] UpdateProblemCommand command)
     {
-        if (id != command.Id) return BadRequest("ID mismatch");
+        if (id != command.Id)
+        {
+            return BadRequest("ID mismatch between URL and request body.");
+        }
+
         await mediator.Send(command);
         return NoContent();
     }
