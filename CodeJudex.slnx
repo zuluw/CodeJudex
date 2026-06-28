@@ -27,5 +27,6 @@
   <Folder Name="/tests/">
     <Project Path="tests/CodeJudex.Audit.UnitTests/CodeJudex.Audit.UnitTests.csproj" />
     <Project Path="tests/CodeJudex.Identity.UnitTests/CodeJudex.Identity.UnitTests.csproj" />
+    <Project Path="tests/CodeJudex.Content.UnitTests/CodeJudex.Content.UnitTests.csproj" />
   </Folder>
 </Solution>
