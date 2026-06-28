@@ -1,7 +1,11 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject, signal, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
+import { ContentService } from '../../../../core/services/content.service';
 import { AuditApiService } from '../../services/audit.service';
+import { ProblemResponseDto, Difficulty } from '../../../../shared/models/problem.model';
 import { AuditResponse } from '../../../../shared/models/audit.models';
 
 @Component({
@@ -10,38 +14,74 @@ import { AuditResponse } from '../../../../shared/models/audit.models';
   imports: [CommonModule, FormsModule],
   templateUrl: './audit-workspace.component.html'
 })
-export class AuditWorkspaceComponent {
+export class AuditWorkspaceComponent implements OnInit, OnDestroy {
+  private readonly route = inject(ActivatedRoute);
+  private readonly contentService = inject(ContentService);
   private readonly auditApi = inject(AuditApiService);
+  private readonly destroy$ = new Subject<void>();
 
-  public activeTab: 'desc' | 'ai' | 'telemetry' = 'desc';
-  public sourceCode: string = '';
-  public isLoading: boolean = false;
-  public auditResult: AuditResponse | null = null;
-  public errorMessage: string | null = null;
+  public problem = signal<ProblemResponseDto | null>(null);
+  public isLoadingProblem = signal<boolean>(true);
+  public errorMessage = signal<string | null>(null);
 
-  public onAuditSubmit(): void {
-    if (!this.sourceCode.trim()) {
-      return;
-    }
+  public activeTab = signal<'desc' | 'ai' | 'telemetry'>('desc');
+  public sourceCode = '';
+  public isAuditing = signal<boolean>(false);
+  public auditResult = signal<AuditResponse | null>(null);
 
-    this.prepareForAnalysis();
+  public ngOnInit(): void {
+    this.route.paramMap
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(params => {
+        const slug = params.get('taskId');
+        if (slug) {
+          this.loadProblem(slug);
+        }
+      });
+  }
 
-    this.auditApi.runAudit(this.sourceCode).subscribe({
-      next: (response) => {
-        this.auditResult = response;
-        this.isLoading = false;
+  public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  private loadProblem(slug: string): void {
+    this.isLoadingProblem.set(true);
+    this.errorMessage.set(null);
+
+    this.contentService.getProblemBySlug(slug).subscribe({
+      next: (data) => {
+        this.problem.set(data);
+        this.isLoadingProblem.set(false);
       },
-      error: (error) => {
-        this.errorMessage = error.message;
-        this.isLoading = false;
-        console.error('[AuditWorkspace] Analysis failed:', error);
+      error: (err) => {
+        this.errorMessage.set('Challenge not found in repository.');
+        this.isLoadingProblem.set(false);
+        this.problem.set(null);
       }
     });
   }
 
-  private prepareForAnalysis(): void {
-    this.isLoading = true;
-    this.auditResult = null;
-    this.errorMessage = null;
+  public formatDifficulty(difficulty: any): string {
+    const map: Record<number, string> = { 0: 'Easy', 1: 'Medium', 2: 'Hard' };
+    return typeof difficulty === 'number' ? map[difficulty] : difficulty;
+  }
+
+  public onAuditSubmit(): void {
+    if (!this.sourceCode.trim()) return;
+
+    this.isAuditing.set(true);
+    this.auditResult.set(null);
+
+    this.auditApi.runAudit(this.sourceCode).subscribe({
+      next: (response) => {
+        this.auditResult.set(response);
+        this.isAuditing.set(false);
+      },
+      error: () => {
+        this.errorMessage.set('Audit failed. Service unreachable.');
+        this.isAuditing.set(false);
+      }
+    });
   }
 }

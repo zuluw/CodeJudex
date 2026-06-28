@@ -1,7 +1,9 @@
 ﻿using CodeJudex.Content.Application.Commands.CreateProblem;
+using CodeJudex.Content.Application.Commands.DeleteProblem;
+using CodeJudex.Content.Application.Commands.UpdateProblem;
+using CodeJudex.Content.Application.DTOs.Responses;
 using CodeJudex.Content.Application.Queries.GetProblemBySlug;
 using CodeJudex.Content.Application.Queries.GetProblemsList;
-using CodeJudex.Content.Application.DTOs.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -44,5 +46,35 @@ public class ProblemsController(IMediator mediator) : ControllerBase
     {
         var result = await mediator.Send(command, ct);
         return CreatedAtAction(nameof(GetBySlug), new { slug = command.Title.ToLower() }, result);
+    }
+
+    /// <summary>
+    /// Deletes a programming challenge.
+    /// </summary>
+    [HttpDelete("{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> Delete(Guid id)
+    {
+        await mediator.Send(new DeleteProblemCommand(id));
+        return NoContent();
+    }
+
+    /// <summary>
+    /// Updates a programming challenge.
+    /// </summary>
+    [HttpPut("{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> Update(Guid id, [FromBody] UpdateProblemCommand command)
+    {
+        if (id != command.Id)
+        {
+            return BadRequest("ID mismatch between URL and request body.");
+        }
+
+        await mediator.Send(command);
+        return NoContent();
     }
 }
